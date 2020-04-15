@@ -69,7 +69,7 @@ public class Main {
     }
 
     private void outputMsgAndLog(String output) {
-        System.out.println(output);
+        outputMsgAndLog(output);
         applicationLogger(output);
     }
 
@@ -88,7 +88,7 @@ public class Main {
     }
 
     private void removeCards() {
-        System.out.println("The card:");
+        outputMsgAndLog("The card:");
         String cardToBeRemoved = userScanner.nextLine();
 
         if (cardMap.containsKey(cardToBeRemoved)) {
@@ -146,7 +146,7 @@ public class Main {
             return;
         }
 
-        System.out.println("The definition of the card:");
+        outputMsgAndLog("The definition of the card:");
         String cardDefinition = userScanner.nextLine();
 
         if (cardMap.containsValue(cardDefinition)) {
@@ -187,7 +187,6 @@ public class Main {
         outputMsgAndLog("How many times to ask?");
         return Integer.parseInt(userScanner.nextLine());
     }
-
 
     private String[] prepareGame(int duration) {
         Object[] allTheCardQuestions = cardMap.keySet().toArray();
