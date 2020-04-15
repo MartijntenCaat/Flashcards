@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class Main {
     private LinkedHashMap<String, String> cardMap;
+    private LinkedHashMap<String, Integer> hardestCardMap;
     private ArrayList<String> logFile;
     private Scanner userScanner;
     private boolean isUpAndRunning;
@@ -17,6 +18,7 @@ public class Main {
     private Main() {
         this.userScanner = new Scanner(System.in);
         this.cardMap = new LinkedHashMap<>();
+        this.hardestCardMap = new LinkedHashMap<>();
         this.logFile = new ArrayList<>();
         this.isUpAndRunning = true;
     }
@@ -54,7 +56,7 @@ public class Main {
                 exportLog();
                 break;
             case "hardest card":
-                //code
+                hardestCard();
                 break;
             case "reset stats":
                 //code
@@ -62,6 +64,27 @@ public class Main {
             default:
                 break;
         }
+    }
+
+    private void hardestCard() {
+        if (hardestCardMap.isEmpty()) {
+            outputMsgAndLog("There are no cards with errors.");
+        } else {
+
+            String hardestCard = null;
+            int hardestCardNumber = 0;
+
+            for (String card : hardestCardMap.keySet()) {
+                if (hardestCardMap.get(card) < hardestCardNumber) {
+                    hardestCard = card;
+                    hardestCardNumber = hardestCardMap.get(card);
+                }
+            }
+            outputMsgAndLog("The hardest card is \"" + hardestCard + "\". You have "
+                    + hardestCardNumber + " errors answering it.");
+        }
+
+
     }
 
     private void applicationLogger(String logLine) {
