@@ -25,7 +25,7 @@ public class Main {
     }
 
     private void runGameByAction() {
-        System.out.println("Input the action (add, remove, import, export, ask, exit):");
+        System.out.println("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):");
         String action = userScanner.nextLine();
 
         switch (action) {
@@ -46,6 +46,15 @@ public class Main {
                 break;
             case "exit":
                 exitGame();
+                break;
+            case "log":
+                //code
+                break;
+            case "hardest card":
+                //code
+                break;
+            case "reset stats":
+                //code
                 break;
             default:
                 break;
@@ -152,6 +161,7 @@ public class Main {
         System.out.println("How many times to ask?");
         return Integer.parseInt(userScanner.nextLine());
     }
+
 
     private String[] prepareGame(int duration) {
         Object[] allTheCardQuestions = cardMap.keySet().toArray();
