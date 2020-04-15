@@ -59,11 +59,16 @@ public class Main {
                 hardestCard();
                 break;
             case "reset stats":
-                //code
+                resetStats();
                 break;
             default:
                 break;
         }
+    }
+
+    private void resetStats() {
+        hardestCardMap.clear();
+        outputMsgAndLog("Card statistics has been reset.");
     }
 
     private void hardestCard() {
@@ -88,10 +93,8 @@ public class Main {
     private void hardestCardPlusOne(String card) {
         if (!hardestCardMap.containsKey(card)) {
             hardestCardMap.put(card, 1);
-            System.out.println(hardestCardMap.keySet() + " - " + hardestCardMap.values());
         } else {
             hardestCardMap.put(card, hardestCardMap.get(card) + 1);
-            System.out.println(hardestCardMap.keySet() + " - " + hardestCardMap.values());
         }
     }
 
