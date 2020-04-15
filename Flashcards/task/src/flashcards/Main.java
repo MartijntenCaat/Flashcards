@@ -69,13 +69,14 @@ public class Main {
     }
 
     private void outputMsgAndLog(String output) {
-        outputMsgAndLog(output);
         applicationLogger(output);
+        System.out.println(output);
     }
 
     private void exportLog() {
         outputMsgAndLog("File name:");
         File file = new File(userScanner.nextLine());
+        applicationLogger(file.toString());
 
         try (FileWriter logWriter = new FileWriter(file, false)) {
             for (String logLine : logFile) {
@@ -90,6 +91,7 @@ public class Main {
     private void removeCards() {
         outputMsgAndLog("The card:");
         String cardToBeRemoved = userScanner.nextLine();
+        applicationLogger(cardToBeRemoved);
 
         if (cardMap.containsKey(cardToBeRemoved)) {
             cardMap.remove(cardToBeRemoved);
@@ -102,13 +104,16 @@ public class Main {
     private void importCards() {
         outputMsgAndLog("File name:");
         File file = new File(userScanner.nextLine());
+        applicationLogger(file.toString());
 
         int cardsImported = 0;
 
         try (Scanner fileScanner = new Scanner(file)) {
             while (fileScanner.hasNext()) {
                 String cardQuestion = fileScanner.nextLine();
+                applicationLogger(cardQuestion);
                 String cardDefinition = fileScanner.nextLine();
+                applicationLogger(cardDefinition);
 
                 cardMap.put(cardQuestion, cardDefinition);
                 cardsImported++;
@@ -122,6 +127,7 @@ public class Main {
     private void exportCards() {
         outputMsgAndLog("File name:");
         File file = new File(userScanner.nextLine());
+        applicationLogger(file.toString());
 
         int numberOfSavedCards = 0;
 
@@ -140,6 +146,7 @@ public class Main {
     private void fillCardMap() {
         outputMsgAndLog("The card:");
         String cardQuestion = userScanner.nextLine();
+        applicationLogger(cardQuestion);
 
         if (cardMap.containsKey(cardQuestion)) {
             outputMsgAndLog("The card \"" + cardQuestion + "\" already exists.");
@@ -148,6 +155,7 @@ public class Main {
 
         outputMsgAndLog("The definition of the card:");
         String cardDefinition = userScanner.nextLine();
+        applicationLogger(cardDefinition);
 
         if (cardMap.containsValue(cardDefinition)) {
             outputMsgAndLog("The definition \"" + cardDefinition + "\" already exists.");
@@ -185,7 +193,9 @@ public class Main {
 
     private int askDurationOfGame() {
         outputMsgAndLog("How many times to ask?");
-        return Integer.parseInt(userScanner.nextLine());
+        String duration = userScanner.nextLine();
+        applicationLogger(duration);
+        return Integer.parseInt(duration);
     }
 
     private String[] prepareGame(int duration) {
@@ -206,6 +216,7 @@ public class Main {
         for (String cardQuestion : cardQuestionList) {
             outputMsgAndLog("Print the definition of \"" + cardQuestion + "\":");
             String cardAnswerByPlayer = userScanner.nextLine();
+            applicationLogger(cardAnswerByPlayer);
 
             String result = checkAnswer(cardQuestion, cardAnswerByPlayer);
             outputMsgAndLog(result);
