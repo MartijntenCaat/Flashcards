@@ -24,7 +24,7 @@ public class Main {
     private void exitGame() {
         isUpAndRunning = false;
         userScanner.close();
-        System.out.println("Bye bye!");
+        outputMsgAndLog("Bye bye!");
     }
 
     private void runGameByAction() {
@@ -82,7 +82,7 @@ public class Main {
                 logWriter.write(logLine + "\n");
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong: \n" + e);
+            outputMsgAndLog("Something went wrong: \n" + e);
         }
         outputMsgAndLog("The log has been saved.");
     }
@@ -93,14 +93,14 @@ public class Main {
 
         if (cardMap.containsKey(cardToBeRemoved)) {
             cardMap.remove(cardToBeRemoved);
-            System.out.println("The card has been removed.");
+            outputMsgAndLog("The card has been removed.");
         } else {
-            System.out.println("Can't remove \"" + cardToBeRemoved + "\": there is no such card.");
+            outputMsgAndLog("Can't remove \"" + cardToBeRemoved + "\": there is no such card.");
         }
     }
 
     private void importCards() {
-        System.out.println("File name:");
+        outputMsgAndLog("File name:");
         File file = new File(userScanner.nextLine());
 
         int cardsImported = 0;
@@ -113,14 +113,14 @@ public class Main {
                 cardMap.put(cardQuestion, cardDefinition);
                 cardsImported++;
             }
-            System.out.println(cardsImported + " cards have been loaded.");
+            outputMsgAndLog(cardsImported + " cards have been loaded.");
         } catch (IOException e) {
-            System.out.println("File not found.");
+            outputMsgAndLog("File not found.");
         }
     }
 
     private void exportCards() {
-        System.out.println("File name:");
+        outputMsgAndLog("File name:");
         File file = new File(userScanner.nextLine());
 
         int numberOfSavedCards = 0;
@@ -132,17 +132,17 @@ public class Main {
                 numberOfSavedCards++;
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong: \n" + e);
+            outputMsgAndLog("Something went wrong: \n" + e);
         }
-        System.out.println(numberOfSavedCards + " cards have been saved.");
+        outputMsgAndLog(numberOfSavedCards + " cards have been saved.");
     }
 
     private void fillCardMap() {
-        System.out.println("The card:");
+        outputMsgAndLog("The card:");
         String cardQuestion = userScanner.nextLine();
 
         if (cardMap.containsKey(cardQuestion)) {
-            System.out.println("The card \"" + cardQuestion + "\" already exists.");
+            outputMsgAndLog("The card \"" + cardQuestion + "\" already exists.");
             return;
         }
 
@@ -150,12 +150,12 @@ public class Main {
         String cardDefinition = userScanner.nextLine();
 
         if (cardMap.containsValue(cardDefinition)) {
-            System.out.println("The definition \"" + cardDefinition + "\" already exists.");
+            outputMsgAndLog("The definition \"" + cardDefinition + "\" already exists.");
             return;
         }
 
         cardMap.put(cardQuestion, cardDefinition);
-        System.out.println("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
+        outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
     }
 
     private String getRightCardQuestion(String answer) {
@@ -184,7 +184,7 @@ public class Main {
     }
 
     private int askDurationOfGame() {
-        System.out.println("How many times to ask?");
+        outputMsgAndLog("How many times to ask?");
         return Integer.parseInt(userScanner.nextLine());
     }
 
@@ -205,11 +205,11 @@ public class Main {
         String[] cardQuestionList = prepareGame(duration);
 
         for (String cardQuestion : cardQuestionList) {
-            System.out.println("Print the definition of \"" + cardQuestion + "\":");
+            outputMsgAndLog("Print the definition of \"" + cardQuestion + "\":");
             String cardAnswerByPlayer = userScanner.nextLine();
 
             String result = checkAnswer(cardQuestion, cardAnswerByPlayer);
-            System.out.println(result);
+            outputMsgAndLog(result);
         }
     }
 
