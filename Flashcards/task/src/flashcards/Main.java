@@ -103,29 +103,24 @@ public class Main {
     }
 
     private void fillCardMap() {
-        String cardQuestion;
-        String cardDefinition = null;
-
         System.out.println("The card:");
-        cardQuestion = userScanner.nextLine();
+        String cardQuestion = userScanner.nextLine();
 
         if (cardMap.containsKey(cardQuestion)) {
             System.out.println("The card \"" + cardQuestion + "\" already exists.");
+            return;
         }
 
-        if (!cardMap.containsKey(cardQuestion)) {
-            System.out.println("The definition of the card:");
-            cardDefinition = userScanner.nextLine();
-        }
+        System.out.println("The definition of the card:");
+        String cardDefinition = userScanner.nextLine();
 
-        if (!cardMap.containsKey(cardQuestion) && cardMap.containsValue(cardDefinition)) {
+        if (cardMap.containsValue(cardDefinition)) {
             System.out.println("The definition \"" + cardDefinition + "\" already exists.");
+            return;
         }
 
-        if (!cardMap.containsKey(cardQuestion) && !cardMap.containsValue(cardDefinition)) {
-            cardMap.put(cardQuestion, cardDefinition);
-            System.out.println("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
-        }
+        cardMap.put(cardQuestion, cardDefinition);
+        System.out.println("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
     }
 
     private String getRightCardQuestion(String answer) {
@@ -137,19 +132,20 @@ public class Main {
         return null;
     }
 
-    private void checkAnswer(String cardQuestion, String cardAnswer) {
+    private String checkAnswer(String cardQuestion, String cardAnswer) {
         if (cardMap.get(cardQuestion).equals(cardAnswer)) {
-            System.out.println("Correct answer.");
-        }
-
-        if (cardMap.containsValue(cardAnswer) && !cardMap.get(cardQuestion).equals(cardAnswer)) {
-            System.out.println("Wrong answer. The correct one is \"" + cardMap.get(cardQuestion) + "\", " +
-                    "you've just written the definition of \"" + getRightCardQuestion(cardAnswer) + "\"");
+            return "Correct answer.";
         }
 
         if (!cardMap.containsValue(cardAnswer)) {
-            System.out.println("Wrong answer. The correct one is \"" + cardMap.get(cardQuestion) + "\".");
+            return "Wrong answer. The correct one is \"" + cardMap.get(cardQuestion) + "\".";
         }
+
+        if (cardMap.containsValue(cardAnswer) && !cardMap.get(cardQuestion).equals(cardAnswer)) {
+            return "Wrong answer. The correct one is \"" + cardMap.get(cardQuestion) + "\", " +
+                    "you've just written the definition of \"" + getRightCardQuestion(cardAnswer) + "\"";
+        }
+        return null;
     }
 
     private int askDurationOfGame() {
@@ -176,11 +172,10 @@ public class Main {
             System.out.println("Print the definition of \"" + cardQuestion + "\":");
             String cardAnswerByPlayer = userScanner.nextLine();
 
-            checkAnswer(cardQuestion, cardAnswerByPlayer);
+            String result = checkAnswer(cardQuestion, cardAnswerByPlayer);
+            System.out.println(result);
         }
     }
-
-    //test
 
     public static void main(String[] args) {
         Main main = new Main();
