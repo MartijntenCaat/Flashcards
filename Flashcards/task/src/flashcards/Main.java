@@ -68,6 +68,12 @@ public class Main {
         logFile.add(logLine);
     }
 
+    private void outputMsgAndLog(String output) {
+        System.out.println(output);
+        applicationLogger(output);
+        System.out.println("Saved this to file: " + output);
+    }
+
     private void removeCards() {
         System.out.println("The card:");
         String cardToBeRemoved = userScanner.nextLine();
