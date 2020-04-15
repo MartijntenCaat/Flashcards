@@ -28,7 +28,7 @@ public class Main {
     }
 
     private void runGameByAction() {
-        System.out.println("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):");
+        outputMsgAndLog("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):");
         String action = userScanner.nextLine();
 
         switch (action) {
@@ -51,7 +51,7 @@ public class Main {
                 exitGame();
                 break;
             case "log":
-                //code
+                exportLog();
                 break;
             case "hardest card":
                 //code
@@ -71,7 +71,20 @@ public class Main {
     private void outputMsgAndLog(String output) {
         System.out.println(output);
         applicationLogger(output);
-        System.out.println("Saved this to file: " + output);
+    }
+
+    private void exportLog() {
+        outputMsgAndLog("File name:");
+        File file = new File(userScanner.nextLine());
+
+        try (FileWriter logWriter = new FileWriter(file, false)) {
+            for (String logLine : logFile) {
+                logWriter.write(logLine + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Something went wrong: \n" + e);
+        }
+        outputMsgAndLog("The log has been saved.");
     }
 
     private void removeCards() {
