@@ -75,7 +75,7 @@ public class Main {
             int hardestCardNumber = 0;
 
             for (String card : hardestCardMap.keySet()) {
-                if (hardestCardMap.get(card) < hardestCardNumber) {
+                if (hardestCardMap.get(card) > hardestCardNumber) {
                     hardestCard = card;
                     hardestCardNumber = hardestCardMap.get(card);
                 }
@@ -83,8 +83,16 @@ public class Main {
             outputMsgAndLog("The hardest card is \"" + hardestCard + "\". You have "
                     + hardestCardNumber + " errors answering it.");
         }
+    }
 
-
+    private void hardestCardPlusOne(String card) {
+        if (!hardestCardMap.containsKey(card)) {
+            hardestCardMap.put(card, 1);
+            System.out.println(hardestCardMap.keySet() + " - " + hardestCardMap.values());
+        } else {
+            hardestCardMap.put(card, hardestCardMap.get(card) + 1);
+            System.out.println(hardestCardMap.keySet() + " - " + hardestCardMap.values());
+        }
     }
 
     private void applicationLogger(String logLine) {
@@ -204,10 +212,12 @@ public class Main {
         }
 
         if (!cardMap.containsValue(cardAnswer)) {
+            hardestCardPlusOne(cardQuestion);
             return "Wrong answer. The correct one is \"" + cardMap.get(cardQuestion) + "\".";
         }
 
         if (cardMap.containsValue(cardAnswer) && !cardMap.get(cardQuestion).equals(cardAnswer)) {
+            hardestCardPlusOne(cardQuestion);
             return "Wrong answer. The correct one is \"" + cardMap.get(cardQuestion) + "\", " +
                     "you've just written the definition of \"" + getRightCardQuestion(cardAnswer) + "\"";
         }
