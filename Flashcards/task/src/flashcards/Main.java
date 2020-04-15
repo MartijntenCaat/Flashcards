@@ -3,18 +3,21 @@ package flashcards;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     private LinkedHashMap<String, String> cardMap;
+    private ArrayList<String> logFile;
     private Scanner userScanner;
     private boolean isUpAndRunning;
 
     private Main() {
         this.userScanner = new Scanner(System.in);
         this.cardMap = new LinkedHashMap<>();
+        this.logFile = new ArrayList<>();
         this.isUpAndRunning = true;
     }
 
@@ -59,6 +62,10 @@ public class Main {
             default:
                 break;
         }
+    }
+
+    private void applicationLogger(String logLine) {
+        logFile.add(logLine);
     }
 
     private void removeCards() {
