@@ -76,19 +76,39 @@ public class Main {
             outputMsgAndLog("There are no cards with errors.");
         } else {
 
-            String hardestCard = null;
+            ArrayList<String> hardestCard = new ArrayList<>();
             int hardestCardNumber = 0;
 
             for (String card : hardestCardMap.keySet()) {
-                if (hardestCardMap.get(card) > hardestCardNumber) {
-                    hardestCard = card;
+                if (hardestCardMap.get(card) >= hardestCardNumber) {
+                    hardestCard.add(card);
                     hardestCardNumber = hardestCardMap.get(card);
                 }
             }
-            outputMsgAndLog("The hardest card is \"" + hardestCard + "\". You have "
-                    + hardestCardNumber + " errors answering it.");
+
+            String hardestCardOutput = null;
+
+            if (hardestCard.size() == 1) {
+                hardestCardOutput = hardestCard.get(0);
+                outputMsgAndLog("The hardest card is \"" + hardestCardOutput + "\". You have "
+                        + hardestCardNumber + " errors answering it.");
+            } else {
+                hardestCardOutput = hardestCard.get(0);
+                for (int i = 1; i < hardestCard.size(); i++) {
+                    hardestCardOutput = hardestCardOutput.concat("\", " + hardestCard.get(i));
+                }
+                outputMsgAndLog("The hardest cards are \"" + hardestCardOutput + "\". You have "
+                        + hardestCardNumber + " errors answering them.");
+            }
+
+
         }
     }
+//
+//    private String getHardestCard() {
+//        String result = null;
+//        return result;
+//    }
 
     private void hardestCardPlusOne(String card) {
         if (!hardestCardMap.containsKey(card)) {
