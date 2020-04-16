@@ -95,7 +95,7 @@ public class Main {
             } else {
                 hardestCardOutput = hardestCard.get(0);
                 for (int i = 1; i < hardestCard.size(); i++) {
-                    hardestCardOutput = hardestCardOutput.concat("\", " + hardestCard.get(i));
+                    hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCard.get(i));
                 }
                 outputMsgAndLog("The hardest cards are \"" + hardestCardOutput + "\". You have "
                         + hardestCardNumber + " errors answering them.");
