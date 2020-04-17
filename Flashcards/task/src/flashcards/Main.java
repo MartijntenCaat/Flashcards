@@ -79,12 +79,17 @@ public class Main {
         }
 
         ArrayList<String> hardestCard = new ArrayList<>();
+
         int hardestCardNumber = 0;
 
         for (String card : hardestCardMap.keySet()) {
-            if (hardestCardMap.get(card) >= hardestCardNumber) {
+
+            if (hardestCardMap.get(card) > hardestCardNumber) {
+                hardestCard.clear();
                 hardestCard.add(card);
                 hardestCardNumber = hardestCardMap.get(card);
+            } else if (hardestCardMap.get(card) == hardestCardNumber) {
+                hardestCard.add(card);
             }
         }
 
