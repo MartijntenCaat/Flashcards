@@ -100,8 +100,6 @@ public class Main {
                 outputMsgAndLog("The hardest cards are \"" + hardestCardOutput + "\". You have "
                         + hardestCardNumber + " errors answering them.");
             }
-
-
         }
     }
 //
@@ -249,9 +247,14 @@ public class Main {
 
     private int askDurationOfGame() {
         outputMsgAndLog("How many times to ask?");
-        String duration = userScanner.nextLine();
-        applicationLogger(duration);
-        return Integer.parseInt(duration);
+
+        try {
+            String duration = userScanner.nextLine();
+            applicationLogger(duration);
+            return Integer.parseInt(duration);
+        } catch (NumberFormatException e) {
+            return askDurationOfGame();
+        }
     }
 
     private String[] prepareGame(int duration) {
