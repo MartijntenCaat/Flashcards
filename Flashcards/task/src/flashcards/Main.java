@@ -32,6 +32,7 @@ public class Main {
     private void runGameByAction() {
         outputMsgAndLog("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):");
         String action = userScanner.nextLine();
+        applicationLogger(action);
 
         switch (action) {
             case "add":
@@ -102,11 +103,6 @@ public class Main {
             }
         }
     }
-//
-//    private String getHardestCard() {
-//        String result = null;
-//        return result;
-//    }
 
     private void hardestCardPlusOne(String card) {
         if (!hardestCardMap.containsKey(card)) {
