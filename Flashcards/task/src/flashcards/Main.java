@@ -75,32 +75,32 @@ public class Main {
     private void hardestCard() {
         if (hardestCardMap.isEmpty()) {
             outputMsgAndLog("There are no cards with errors.");
+            return;
+        }
+
+        ArrayList<String> hardestCard = new ArrayList<>();
+        int hardestCardNumber = 0;
+
+        for (String card : hardestCardMap.keySet()) {
+            if (hardestCardMap.get(card) >= hardestCardNumber) {
+                hardestCard.add(card);
+                hardestCardNumber = hardestCardMap.get(card);
+            }
+        }
+
+        String hardestCardOutput;
+
+        if (hardestCard.size() == 1) {
+            hardestCardOutput = hardestCard.get(0);
+            outputMsgAndLog("The hardest card is \"" + hardestCardOutput + "\". You have "
+                    + hardestCardNumber + " errors answering it.");
         } else {
-
-            ArrayList<String> hardestCard = new ArrayList<>();
-            int hardestCardNumber = 0;
-
-            for (String card : hardestCardMap.keySet()) {
-                if (hardestCardMap.get(card) >= hardestCardNumber) {
-                    hardestCard.add(card);
-                    hardestCardNumber = hardestCardMap.get(card);
-                }
+            hardestCardOutput = hardestCard.get(0);
+            for (int i = 1; i < hardestCard.size(); i++) {
+                hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCard.get(i));
             }
-
-            String hardestCardOutput;
-
-            if (hardestCard.size() == 1) {
-                hardestCardOutput = hardestCard.get(0);
-                outputMsgAndLog("The hardest card is \"" + hardestCardOutput + "\". You have "
-                        + hardestCardNumber + " errors answering it.");
-            } else {
-                hardestCardOutput = hardestCard.get(0);
-                for (int i = 1; i < hardestCard.size(); i++) {
-                    hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCard.get(i));
-                }
-                outputMsgAndLog("The hardest cards are \"" + hardestCardOutput + "\". You have "
-                        + hardestCardNumber + " errors answering them.");
-            }
+            outputMsgAndLog("The hardest cards are \"" + hardestCardOutput + "\". You have "
+                    + hardestCardNumber + " errors answering them.");
         }
     }
 
