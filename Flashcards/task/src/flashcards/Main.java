@@ -86,7 +86,7 @@ public class Main {
                 }
             }
 
-            String hardestCardOutput = null;
+            String hardestCardOutput;
 
             if (hardestCard.size() == 1) {
                 hardestCardOutput = hardestCard.get(0);
@@ -147,6 +147,7 @@ public class Main {
 
         if (cardMap.containsKey(cardToBeRemoved)) {
             cardMap.remove(cardToBeRemoved);
+            hardestCardMap.remove(cardToBeRemoved);
             outputMsgAndLog("The card has been removed.");
         } else {
             outputMsgAndLog("Can't remove \"" + cardToBeRemoved + "\": there is no such card.");
@@ -166,8 +167,11 @@ public class Main {
                 applicationLogger(cardQuestion);
                 String cardDefinition = fileScanner.nextLine();
                 applicationLogger(cardDefinition);
+                String cardErrors = fileScanner.nextLine();
+                applicationLogger(cardErrors);
 
                 cardMap.put(cardQuestion, cardDefinition);
+                hardestCardMap.put(cardQuestion, Integer.parseInt(cardErrors));
                 cardsImported++;
             }
             outputMsgAndLog(cardsImported + " cards have been loaded.");
@@ -187,6 +191,7 @@ public class Main {
             for (String cardQuestion : cardMap.keySet()) {
                 cardWriter.write(cardQuestion + "\n");
                 cardWriter.write(cardMap.get(cardQuestion) + "\n");
+                cardWriter.write(hardestCardMap.get(cardQuestion) + "\n");
                 numberOfSavedCards++;
             }
         } catch (IOException e) {
@@ -215,6 +220,7 @@ public class Main {
         }
 
         cardMap.put(cardQuestion, cardDefinition);
+        hardestCardMap.put(cardQuestion, 0);
         outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
     }
 
@@ -246,11 +252,11 @@ public class Main {
     }
 
     private int askDurationOfGame() {
-        outputMsgAndLog("How many times to ask?");
-
         try {
+            outputMsgAndLog("How many times to ask?");
             String duration = userScanner.nextLine();
             applicationLogger(duration);
+
             return Integer.parseInt(duration);
         } catch (NumberFormatException e) {
             return askDurationOfGame();
