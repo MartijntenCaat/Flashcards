@@ -8,19 +8,48 @@ import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Scanner;
 
+class Flashcard {
+    private String question;
+    private String definition;
+    private int errors;
+
+    Flashcard(String question, String definition, int errors) {
+        this.question = question;
+        this.definition = definition;
+        this.errors = errors;
+    }
+
+    public String getQuestion() {
+        return  question;
+    }
+
+    public String getDefinition() {
+        return definition;
+    }
+
+    public int getErrors() {
+        return errors;
+    }
+
+}
+
 public class Main {
-    private LinkedHashMap<String, String> cardMap;
-    private LinkedHashMap<String, Integer> hardestCardMap;
+    private ArrayList<Flashcard> flashcards;
     private ArrayList<String> logFile;
     private Scanner userScanner;
     private boolean isUpAndRunning;
 
+    private LinkedHashMap<String, String> cardMap;
+    private LinkedHashMap<String, Integer> hardestCardMap;
+
     private Main() {
+        this.flashcards = new ArrayList<>();
         this.userScanner = new Scanner(System.in);
-        this.cardMap = new LinkedHashMap<>();
-        this.hardestCardMap = new LinkedHashMap<>();
         this.logFile = new ArrayList<>();
         this.isUpAndRunning = true;
+
+        this.cardMap = new LinkedHashMap<>(); // uitfaseren
+        this.hardestCardMap = new LinkedHashMap<>(); // uitfaseren
     }
 
     private void exitGame() {
@@ -65,6 +94,34 @@ public class Main {
             default:
                 break;
         }
+    }
+
+    private void fillCardMap() {
+        outputMsgAndLog("The card:");
+        String cardQuestion = userScanner.nextLine();
+        applicationLogger(cardQuestion);
+
+
+
+        if (cardMap.containsKey(cardQuestion)) {
+            outputMsgAndLog("The card \"" + cardQuestion + "\" already exists.");
+            return;
+        }
+
+        outputMsgAndLog("The definition of the card:");
+        String cardDefinition = userScanner.nextLine();
+        applicationLogger(cardDefinition);
+
+        if (cardMap.containsValue(cardDefinition)) {
+            outputMsgAndLog("The definition \"" + cardDefinition + "\" already exists.");
+            return;
+        }
+
+
+
+        cardMap.put(cardQuestion, cardDefinition);
+        hardestCardMap.put(cardQuestion, 0);
+        outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
     }
 
     private void resetStats() {
@@ -196,30 +253,6 @@ public class Main {
             outputMsgAndLog("Something went wrong: \n" + e);
         }
         outputMsgAndLog(numberOfSavedCards + " cards have been saved.");
-    }
-
-    private void fillCardMap() {
-        outputMsgAndLog("The card:");
-        String cardQuestion = userScanner.nextLine();
-        applicationLogger(cardQuestion);
-
-        if (cardMap.containsKey(cardQuestion)) {
-            outputMsgAndLog("The card \"" + cardQuestion + "\" already exists.");
-            return;
-        }
-
-        outputMsgAndLog("The definition of the card:");
-        String cardDefinition = userScanner.nextLine();
-        applicationLogger(cardDefinition);
-
-        if (cardMap.containsValue(cardDefinition)) {
-            outputMsgAndLog("The definition \"" + cardDefinition + "\" already exists.");
-            return;
-        }
-
-        cardMap.put(cardQuestion, cardDefinition);
-        hardestCardMap.put(cardQuestion, 0);
-        outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
     }
 
     private String getRightCardQuestion(String answer) {
