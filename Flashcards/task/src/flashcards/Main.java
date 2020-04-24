@@ -34,7 +34,7 @@ class Flashcard {
 }
 
 public class Main {
-    private ArrayList<Flashcard> flashcards;
+    private ArrayList<Flashcard> flashcardList;
     private ArrayList<String> logFile;
     private Scanner userScanner;
     private boolean isUpAndRunning;
@@ -43,7 +43,7 @@ public class Main {
     private LinkedHashMap<String, Integer> hardestCardMap;
 
     private Main() {
-        this.flashcards = new ArrayList<>();
+        this.flashcardList = new ArrayList<>();
         this.userScanner = new Scanner(System.in);
         this.logFile = new ArrayList<>();
         this.isUpAndRunning = true;
@@ -101,9 +101,7 @@ public class Main {
         String cardQuestion = userScanner.nextLine();
         applicationLogger(cardQuestion);
 
-
-
-        if (cardMap.containsKey(cardQuestion)) {
+        if (checkCardQuestionInList(cardQuestion)) {
             outputMsgAndLog("The card \"" + cardQuestion + "\" already exists.");
             return;
         }
@@ -112,16 +110,32 @@ public class Main {
         String cardDefinition = userScanner.nextLine();
         applicationLogger(cardDefinition);
 
-        if (cardMap.containsValue(cardDefinition)) {
+        if (checkCardDefinitionInList(cardDefinition)) {
             outputMsgAndLog("The definition \"" + cardDefinition + "\" already exists.");
             return;
         }
 
+        Flashcard flashcard = new Flashcard(cardQuestion, cardDefinition, 0);
+        flashcardList.add(flashcard);
+        outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardQuestion + "\") has been added.");
+    }
 
+    private boolean checkCardQuestionInList(String cardQuestion) {
+        for (Flashcard flashcard : flashcardList) {
+            if (flashcard.getQuestion().equals(cardQuestion)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        cardMap.put(cardQuestion, cardDefinition);
-        hardestCardMap.put(cardQuestion, 0);
-        outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
+    private boolean checkCardDefinitionInList(String cardDefinition) {
+        for (Flashcard flashcard : flashcardList) {
+            if (flashcard.getDefinition().equals(cardDefinition)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void resetStats() {
