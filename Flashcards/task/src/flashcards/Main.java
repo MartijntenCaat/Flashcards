@@ -327,27 +327,18 @@ public class Main {
         }
     }
 
-    private String[] prepareGame(int duration) {
-        Object[] allTheCardQuestions = cardMap.keySet().toArray();
-        Random randomised = new Random();
-        String[] cardQuestionList = new String[duration];
-
-        for (int i = 0; i < duration; i++) {
-            cardQuestionList[i] = allTheCardQuestions[randomised.nextInt(allTheCardQuestions.length)].toString();
-        }
-        return cardQuestionList;
-    }
-
     private void runFlashCardGame() {
         int duration = askDurationOfGame();
-        String[] cardQuestionList = prepareGame(duration);
+        Random random = new Random();
+        for (int i = 0; i < duration; i++) {
+            int randomNumber = random.nextInt(flashcardList.size());
+            Flashcard flashcard = flashcardList.get(randomNumber);
 
-        for (String cardQuestion : cardQuestionList) {
-            outputMsgAndLog("Print the definition of \"" + cardQuestion + "\":");
+            outputMsgAndLog("Print the definition of \"" + flashcard.getQuestion() + "\":");
             String cardAnswerByPlayer = userScanner.nextLine();
             applicationLogger(cardAnswerByPlayer);
 
-            String result = checkAnswer(cardQuestion, cardAnswerByPlayer);
+            String result = checkAnswer(flashcard.getQuestion(), cardAnswerByPlayer);
             outputMsgAndLog(result);
         }
     }
