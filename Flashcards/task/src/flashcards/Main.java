@@ -107,7 +107,7 @@ public class Main {
         String cardQuestion = userScanner.nextLine();
         applicationLogger(cardQuestion);
 
-        if (checkCardQuestionInList(cardQuestion)) {
+        if (checkCardQuestionInList(cardQuestion) == null) {
             outputMsgAndLog("The card \"" + cardQuestion + "\" already exists.");
             return;
         }
@@ -116,7 +116,7 @@ public class Main {
         String cardDefinition = userScanner.nextLine();
         applicationLogger(cardDefinition);
 
-        if (checkCardDefinitionInList(cardDefinition)) {
+        if (checkCardDefinitionInList(cardDefinition) == null) {
             outputMsgAndLog("The definition \"" + cardDefinition + "\" already exists.");
             return;
         }
@@ -126,22 +126,22 @@ public class Main {
         outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardQuestion + "\") has been added.");
     }
 
-    private boolean checkCardQuestionInList(String cardQuestion) {
+    private Flashcard checkCardQuestionInList(String cardQuestion) {
         for (Flashcard flashcard : flashcardList) {
             if (flashcard.getQuestion().equals(cardQuestion)) {
-                return true;
+                return flashcard;
             }
         }
-        return false;
+        return null;
     }
 
-    private boolean checkCardDefinitionInList(String cardDefinition) {
+    private Flashcard checkCardDefinitionInList(String cardDefinition) {
         for (Flashcard flashcard : flashcardList) {
             if (flashcard.getDefinition().equals(cardDefinition)) {
-                return true;
+                return flashcard;
             }
         }
-        return false;
+        return null;
     }
 
     private void resetStats() {
@@ -226,14 +226,16 @@ public class Main {
         outputMsgAndLog("The log has been saved.");
     }
 
+
+
     private void removeCards() {
         outputMsgAndLog("The card:");
         String cardToBeRemoved = userScanner.nextLine();
         applicationLogger(cardToBeRemoved);
 
-        if (cardMap.containsKey(cardToBeRemoved)) {
-            cardMap.remove(cardToBeRemoved);
-            hardestCardMap.remove(cardToBeRemoved);
+        Flashcard flashcard = checkCardQuestionInList(cardToBeRemoved);
+        if (flashcard != null) {
+            flashcardList.remove(flashcard);
             outputMsgAndLog("The card has been removed.");
         } else {
             outputMsgAndLog("Can't remove \"" + cardToBeRemoved + "\": there is no such card.");
