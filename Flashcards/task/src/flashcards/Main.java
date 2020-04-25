@@ -35,6 +35,8 @@ class Flashcard {
         errors = 0;
     }
 
+
+
 }
 
 public class Main {
@@ -149,8 +151,17 @@ public class Main {
         outputMsgAndLog("Card statistics has been reset.");
     }
 
+    private boolean hardestCardPresent() {
+        for (Flashcard flashcard : flashcardList) {
+            if (flashcard.getErrors() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void hardestCard() {
-        if (hardestCardMap.isEmpty()) {
+        if (hardestCardPresent()) {
             outputMsgAndLog("There are no cards with errors.");
             return;
         }
