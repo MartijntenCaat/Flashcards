@@ -31,6 +31,10 @@ class Flashcard {
         return errors;
     }
 
+    public void resetStats() {
+        errors = 0;
+    }
+
 }
 
 public class Main {
@@ -139,7 +143,9 @@ public class Main {
     }
 
     private void resetStats() {
-        hardestCardMap.clear();
+        for (Flashcard flashcard : flashcardList) {
+            flashcard.resetStats();
+        }
         outputMsgAndLog("Card statistics has been reset.");
     }
 
