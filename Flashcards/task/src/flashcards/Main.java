@@ -252,15 +252,13 @@ public class Main {
                 applicationLogger(cardErrors);
 
                 Flashcard flashcard = checkCardQuestionInList(cardQuestion);
-
                 if (flashcard == null) {
                     flashcard = new Flashcard(cardQuestion, cardDefinition, Integer.parseInt(cardErrors));
+                    flashcardList.add(flashcard);
                 } else {
                     flashcard.setDefinition(cardDefinition);
                     flashcard.setErrors(Integer.parseInt(cardErrors));
                 }
-
-                flashcardList.add(flashcard);
                 cardsImported++;
             }
             outputMsgAndLog(cardsImported + " cards have been loaded.");
