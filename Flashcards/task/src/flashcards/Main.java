@@ -251,15 +251,16 @@ public class Main {
                 String cardErrors = fileScanner.nextLine();
                 applicationLogger(cardErrors);
 
-                if (checkCardQuestionInList(cardQuestion).getQuestion().equals(cardQuestion)) {
-                    Flashcard flashcard = checkCardQuestionInList(cardQuestion);
+                Flashcard flashcard = checkCardQuestionInList(cardQuestion);
+
+                if (flashcard == null) {
+                    flashcard = new Flashcard(cardQuestion, cardDefinition, Integer.parseInt(cardErrors));
+                } else {
                     flashcard.setDefinition(cardDefinition);
                     flashcard.setErrors(Integer.parseInt(cardErrors));
-                    flashcardList.add(flashcard);
-                } else {
-                    Flashcard flashcard = new Flashcard(cardQuestion, cardDefinition, Integer.parseInt(cardErrors));
-                    flashcardList.add(flashcard);
                 }
+
+                flashcardList.add(flashcard);
                 cardsImported++;
             }
             outputMsgAndLog(cardsImported + " cards have been loaded.");
