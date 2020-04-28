@@ -82,9 +82,9 @@ public class Main {
             case "import":
                 importCards();
                 break;
-            case "export":
-                exportCards();
-                break;
+//            case "export":
+//                exportCards();
+//                break;
             case "ask":
                 runFlashCardGame();
                 break;
@@ -94,9 +94,9 @@ public class Main {
             case "log":
                 exportLog();
                 break;
-            case "hardest card":
-                hardestCard();
-                break;
+//            case "hardest card":
+//                hardestCard();
+//                break;
             case "reset stats":
                 resetStats();
                 break;
@@ -163,39 +163,39 @@ public class Main {
         return false;
     }
 
-    private void hardestCard() {
-        if (hardestCardPresent()) {
-            outputMsgAndLog("There are no cards with errors.");
-            return;
-        }
-
-        ArrayList<String> hardestCard = new ArrayList<>();
-        int hardestCardNumber = 0;
-
-        for (String card : hardestCardMap.keySet()) {
-            if (hardestCardMap.get(card) > hardestCardNumber) {
-                hardestCard.clear();
-                hardestCard.add(card);
-                hardestCardNumber = hardestCardMap.get(card);
-            } else if (hardestCardMap.get(card) == hardestCardNumber) {
-                hardestCard.add(card);
-            }
-        }
-
-        String hardestCardOutput = hardestCard.get(0);
-        if (hardestCard.size() == 1) {
-            outputMsgAndLog("The hardest card is \"" + hardestCardOutput + "\". You have "
-                    + hardestCardNumber + " errors answering it.");
-            return;
-        }
-
-        for (int i = 1; i < hardestCard.size(); i++) {
-            hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCard.get(i));
-        }
-
-        outputMsgAndLog("The hardest cards are \"" + hardestCardOutput + "\". You have "
-                + hardestCardNumber + " errors answering them.");
-    }
+//    private void hardestCard() {
+//        if (hardestCardPresent()) {
+//            outputMsgAndLog("There are no cards with errors.");
+//            return;
+//        }
+//
+//        ArrayList<String> hardestCard = new ArrayList<>();
+//        int hardestCardNumber = 0;
+//
+//        for (String card : hardestCardMap.keySet()) {
+//            if (hardestCardMap.get(card) > hardestCardNumber) {
+//                hardestCard.clear();
+//                hardestCard.add(card);
+//                hardestCardNumber = hardestCardMap.get(card);
+//            } else if (hardestCardMap.get(card) == hardestCardNumber) {
+//                hardestCard.add(card);
+//            }
+//        }
+//
+//        String hardestCardOutput = hardestCard.get(0);
+//        if (hardestCard.size() == 1) {
+//            outputMsgAndLog("The hardest card is \"" + hardestCardOutput + "\". You have "
+//                    + hardestCardNumber + " errors answering it.");
+//            return;
+//        }
+//
+//        for (int i = 1; i < hardestCard.size(); i++) {
+//            hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCard.get(i));
+//        }
+//
+//        outputMsgAndLog("The hardest cards are \"" + hardestCardOutput + "\". You have "
+//                + hardestCardNumber + " errors answering them.");
+//    }
 
     private void applicationLogger(String logLine) {
         logFile.add(logLine);
@@ -268,25 +268,25 @@ public class Main {
         }
     }
 
-    private void exportCards() {
-        outputMsgAndLog("File name:");
-        File file = new File(userScanner.nextLine());
-        applicationLogger(file.toString());
-
-        int numberOfSavedCards = 0;
-
-        try (FileWriter cardWriter = new FileWriter(file, false)) {
-            for (String cardQuestion : cardMap.keySet()) {
-                cardWriter.write(cardQuestion + "\n");
-                cardWriter.write(cardMap.get(cardQuestion) + "\n");
-                cardWriter.write(hardestCardMap.get(cardQuestion) + "\n");
-                numberOfSavedCards++;
-            }
-        } catch (IOException e) {
-            outputMsgAndLog("Something went wrong: \n" + e);
-        }
-        outputMsgAndLog(numberOfSavedCards + " cards have been saved.");
-    }
+//    private void exportCards() {
+//        outputMsgAndLog("File name:");
+//        File file = new File(userScanner.nextLine());
+//        applicationLogger(file.toString());
+//
+//        int numberOfSavedCards = 0;
+//
+//        try (FileWriter cardWriter = new FileWriter(file, false)) {
+//            for (String cardQuestion : cardMap.keySet()) {
+//                cardWriter.write(cardQuestion + "\n");
+//                cardWriter.write(cardMap.get(cardQuestion) + "\n");
+//                cardWriter.write(hardestCardMap.get(cardQuestion) + "\n");
+//                numberOfSavedCards++;
+//            }
+//        } catch (IOException e) {
+//            outputMsgAndLog("Something went wrong: \n" + e);
+//        }
+//        outputMsgAndLog(numberOfSavedCards + " cards have been saved.");
+//    }
 
     private String checkAnswer(Flashcard playedFlashcard, String cardAnswer) {
         if (playedFlashcard.getDefinition().equals(cardAnswer)) {
