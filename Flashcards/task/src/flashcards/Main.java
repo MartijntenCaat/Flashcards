@@ -108,7 +108,7 @@ public class Main {
         String cardQuestion = userScanner.nextLine();
         applicationLogger(cardQuestion);
 
-        if (checkCardQuestionInList(cardQuestion) == null) {
+        if (checkCardQuestionInList(cardQuestion) != null) {
             outputMsgAndLog("The card \"" + cardQuestion + "\" already exists.");
             return;
         }
@@ -117,14 +117,14 @@ public class Main {
         String cardDefinition = userScanner.nextLine();
         applicationLogger(cardDefinition);
 
-        if (checkCardDefinitionInList(cardDefinition) == null) {
+        if (checkCardDefinitionInList(cardDefinition) != null) {
             outputMsgAndLog("The definition \"" + cardDefinition + "\" already exists.");
             return;
         }
 
         Flashcard flashcard = new Flashcard(cardQuestion, cardDefinition, 0);
         flashcardList.add(flashcard);
-        outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardQuestion + "\") has been added.");
+        outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
     }
 
     private Flashcard checkCardQuestionInList(String cardQuestion) {
@@ -279,15 +279,6 @@ public class Main {
         outputMsgAndLog(numberOfSavedCards + " cards have been saved.");
     }
 
-    private String getRightCardQuestion(String answer) {
-        for (String cardQuestionToFind : cardMap.keySet()) {
-            if (answer.equals(cardMap.get(cardQuestionToFind))) {
-                return cardQuestionToFind;
-            }
-        }
-        return null;
-    }
-
     private String checkAnswer(Flashcard playedFlashcard, String cardAnswer) {
         if (playedFlashcard.getDefinition().equals(cardAnswer)) {
             return "Correct answer.";
@@ -303,7 +294,7 @@ public class Main {
         if (actualFlashcard != null) {
             playedFlashcard.addOneError();
             return "Wrong answer. The correct one is \"" + playedFlashcard.getDefinition() + "\", " +
-                    "you've just written the definition of \"" + actualFlashcard.getDefinition() + "\"";
+                    "you've just written the definition of \"" + actualFlashcard.getQuestion() + "\"";
         }
         return null;
     }
