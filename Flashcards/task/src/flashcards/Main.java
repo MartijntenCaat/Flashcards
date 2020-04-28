@@ -31,16 +31,13 @@ class Flashcard {
         return errors;
     }
 
+    public void addOneError() {
+        errors++;
+    }
+
     public void resetStats() {
         errors = 0;
     }
-
-    public void addOneError(Flashcard flashcard) {
-        flashcard.errors++;
-    }
-
-
-
 }
 
 public class Main {
@@ -198,8 +195,6 @@ public class Main {
                 + hardestCardNumber + " errors answering them.");
     }
 
-
-
     private void applicationLogger(String logLine) {
         logFile.add(logLine);
     }
@@ -223,8 +218,6 @@ public class Main {
         }
         outputMsgAndLog("The log has been saved.");
     }
-
-
 
     private void removeCards() {
         outputMsgAndLog("The card:");
@@ -295,23 +288,22 @@ public class Main {
         return null;
     }
 
-    private String checkAnswer(Flashcard flashcard, String cardAnswer) {
-        if (flashcard.getDefinition().equals(cardAnswer)) {
+    private String checkAnswer(Flashcard playedFlashcard, String cardAnswer) {
+        if (playedFlashcard.getDefinition().equals(cardAnswer)) {
             return "Correct answer.";
         }
 
-        if (checkCardDefinitionInList(cardAnswer) != null) {
-            hardestCardPlusOne();
-        }
-        if (!cardMap.containsValue(cardAnswer)) {
-            hardestCardPlusOne(cardQuestion);
-            return "Wrong answer. The correct one is \"" + cardMap.get(cardQuestion) + "\".";
+        Flashcard actualFlashcard = checkCardDefinitionInList(cardAnswer);
+
+        if (actualFlashcard == null) {
+            playedFlashcard.addOneError();
+            return "Wrong answer. The correct one is \"" + playedFlashcard.getDefinition() + "\".";
         }
 
-        if (cardMap.containsValue(cardAnswer) && !cardMap.get(cardQuestion).equals(cardAnswer)) {
-            hardestCardPlusOne(cardQuestion);
-            return "Wrong answer. The correct one is \"" + cardMap.get(cardQuestion) + "\", " +
-                    "you've just written the definition of \"" + getRightCardQuestion(cardAnswer) + "\"";
+        if (actualFlashcard != null) {
+            playedFlashcard.addOneError();
+            return "Wrong answer. The correct one is \"" + playedFlashcard.getDefinition() + "\", " +
+                    "you've just written the definition of \"" + actualFlashcard.getDefinition() + "\"";
         }
         return null;
     }
