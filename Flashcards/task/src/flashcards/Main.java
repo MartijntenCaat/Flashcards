@@ -27,8 +27,8 @@ class Flashcard {
         return definition;
     }
 
-    public void setDefinition(String definition) {
-        definition = definition;
+    public void setDefinition(String newDefinition) {
+        definition = newDefinition;
     }
 
     public int getErrors() {
@@ -39,8 +39,8 @@ class Flashcard {
         errors++;
     }
 
-    public void setErrors(int errors) {
-        errors = errors;
+    public void setErrors(int newErrors) {
+        errors = newErrors;
     }
 
     public void resetStats() {
@@ -164,7 +164,7 @@ public class Main {
     }
 
     private void hardestCard() {
-        if (hardestCardPresent()) {
+        if (!hardestCardPresent()) {
             outputMsgAndLog("There are no cards with errors.");
             return;
         }
@@ -175,20 +175,20 @@ public class Main {
         for (Flashcard flashcard : flashcardList) {
             if (flashcard.getErrors() > hardestCardNumber) {
                 hardestCard.clear();
-                hardestCard.add(flashcard.getDefinition());
+                hardestCard.add(flashcard.getQuestion());
                 hardestCardNumber = flashcard.getErrors();
             } else if (flashcard.getErrors() == hardestCardNumber) {
                 hardestCard.add(flashcard.getQuestion());
             }
         }
 
-        String hardestCardOutput = hardestCard.get(0);
         if (hardestCard.size() == 1) {
-            outputMsgAndLog("The hardest card is \"" + hardestCardOutput + "\". You have "
+            outputMsgAndLog("The hardest card is \"" + hardestCard.get(0) + "\". You have "
                     + hardestCardNumber + " errors answering it.");
             return;
         }
 
+        String hardestCardOutput = hardestCard.get(0);
         for (int i = 1; i < hardestCard.size(); i++) {
             hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCard.get(i));
         }
