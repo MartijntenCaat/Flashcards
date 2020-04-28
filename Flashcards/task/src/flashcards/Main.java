@@ -82,9 +82,9 @@ public class Main {
             case "import":
                 importCards();
                 break;
-//            case "export":
-//                exportCards();
-//                break;
+            case "export":
+                exportCards();
+                break;
             case "ask":
                 runFlashCardGame();
                 break;
@@ -269,25 +269,25 @@ public class Main {
         }
     }
 
-//    private void exportCards() {
-//        outputMsgAndLog("File name:");
-//        File file = new File(userScanner.nextLine());
-//        applicationLogger(file.toString());
-//
-//        int numberOfSavedCards = 0;
-//
-//        try (FileWriter cardWriter = new FileWriter(file, false)) {
-//            for (String cardQuestion : cardMap.keySet()) {
-//                cardWriter.write(cardQuestion + "\n");
-//                cardWriter.write(cardMap.get(cardQuestion) + "\n");
-//                cardWriter.write(hardestCardMap.get(cardQuestion) + "\n");
-//                numberOfSavedCards++;
-//            }
-//        } catch (IOException e) {
-//            outputMsgAndLog("Something went wrong: \n" + e);
-//        }
-//        outputMsgAndLog(numberOfSavedCards + " cards have been saved.");
-//    }
+    private void exportCards() {
+        outputMsgAndLog("File name:");
+        File file = new File(userScanner.nextLine());
+        applicationLogger(file.toString());
+
+        int numberOfSavedCards = 0;
+
+        try (FileWriter cardWriter = new FileWriter(file, false)) {
+            for (Flashcard flashcard : flashcardList) {
+                cardWriter.write(flashcard.getQuestion() + "\n");
+                cardWriter.write(flashcard.getDefinition() + "\n");
+                cardWriter.write(flashcard.getErrors() + "\n");
+                numberOfSavedCards++;
+            }
+        } catch (IOException e) {
+            outputMsgAndLog("Something went wrong: \n" + e);
+        }
+        outputMsgAndLog(numberOfSavedCards + " cards have been saved.");
+    }
 
     private String checkAnswer(Flashcard playedFlashcard, String cardAnswer) {
         if (playedFlashcard.getDefinition().equals(cardAnswer)) {
