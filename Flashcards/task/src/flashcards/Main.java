@@ -35,6 +35,10 @@ class Flashcard {
         errors = 0;
     }
 
+    public void addOneError(Flashcard flashcard) {
+        flashcard.errors++;
+    }
+
 
 
 }
@@ -194,13 +198,7 @@ public class Main {
                 + hardestCardNumber + " errors answering them.");
     }
 
-    private void hardestCardPlusOne(String card) {
-        if (!hardestCardMap.containsKey(card)) {
-            hardestCardMap.put(card, 1);
-        } else {
-            hardestCardMap.put(card, hardestCardMap.get(card) + 1);
-        }
-    }
+
 
     private void applicationLogger(String logLine) {
         logFile.add(logLine);
@@ -297,11 +295,14 @@ public class Main {
         return null;
     }
 
-    private String checkAnswer(String cardQuestion, String cardAnswer) {
-        if (cardMap.get(cardQuestion).equals(cardAnswer)) {
+    private String checkAnswer(Flashcard flashcard, String cardAnswer) {
+        if (flashcard.getDefinition().equals(cardAnswer)) {
             return "Correct answer.";
         }
 
+        if (checkCardDefinitionInList(cardAnswer) != null) {
+            hardestCardPlusOne();
+        }
         if (!cardMap.containsValue(cardAnswer)) {
             hardestCardPlusOne(cardQuestion);
             return "Wrong answer. The correct one is \"" + cardMap.get(cardQuestion) + "\".";
@@ -338,7 +339,7 @@ public class Main {
             String cardAnswerByPlayer = userScanner.nextLine();
             applicationLogger(cardAnswerByPlayer);
 
-            String result = checkAnswer(flashcard.getQuestion(), cardAnswerByPlayer);
+            String result = checkAnswer(flashcard, cardAnswerByPlayer);
             outputMsgAndLog(result);
         }
     }
