@@ -35,6 +35,10 @@ class Flashcard {
         errors++;
     }
 
+    public void setErrors(int errors) {
+        errors = errors;
+    }
+
     public void resetStats() {
         errors = 0;
     }
@@ -46,17 +50,11 @@ public class Main {
     private Scanner userScanner;
     private boolean isUpAndRunning;
 
-    private LinkedHashMap<String, String> cardMap;
-    private LinkedHashMap<String, Integer> hardestCardMap;
-
     private Main() {
         this.flashcardList = new ArrayList<>();
         this.userScanner = new Scanner(System.in);
         this.logFile = new ArrayList<>();
         this.isUpAndRunning = true;
-
-        this.cardMap = new LinkedHashMap<>(); // uitfaseren
-        this.hardestCardMap = new LinkedHashMap<>(); // uitfaseren
     }
 
     private void exitGame() {
@@ -249,8 +247,8 @@ public class Main {
                 String cardErrors = fileScanner.nextLine();
                 applicationLogger(cardErrors);
 
-                cardMap.put(cardQuestion, cardDefinition);
-                hardestCardMap.put(cardQuestion, Integer.parseInt(cardErrors));
+                Flashcard flashcard = new Flashcard(cardQuestion, cardDefinition, Integer.parseInt(cardErrors));
+                flashcardList.add(flashcard);
                 cardsImported++;
             }
             outputMsgAndLog(cardsImported + " cards have been loaded.");
