@@ -109,7 +109,7 @@ public class Main {
         String cardQuestion = userScanner.nextLine();
         applicationLogger(cardQuestion);
 
-        if (checkCardQuestionInList(cardQuestion) != null) {
+        if (findCardQuestionInList(cardQuestion) != null) {
             outputMsgAndLog("The card \"" + cardQuestion + "\" already exists.");
             return;
         }
@@ -118,7 +118,7 @@ public class Main {
         String cardDefinition = userScanner.nextLine();
         applicationLogger(cardDefinition);
 
-        if (checkCardDefinitionInList(cardDefinition) != null) {
+        if (findCardDefinitionInList(cardDefinition) != null) {
             outputMsgAndLog("The definition \"" + cardDefinition + "\" already exists.");
             return;
         }
@@ -128,7 +128,7 @@ public class Main {
         outputMsgAndLog("The pair (\"" + cardQuestion + "\"" + ":" + "\"" + cardDefinition + "\") has been added.");
     }
 
-    private Flashcard checkCardQuestionInList(String cardQuestion) {
+    private Flashcard findCardQuestionInList(String cardQuestion) {
         for (Flashcard flashcard : flashcardList) {
             if (flashcard.getQuestion().equals(cardQuestion)) {
                 return flashcard;
@@ -137,7 +137,7 @@ public class Main {
         return null;
     }
 
-    private Flashcard checkCardDefinitionInList(String cardDefinition) {
+    private Flashcard findCardDefinitionInList(String cardDefinition) {
         for (Flashcard flashcard : flashcardList) {
             if (flashcard.getDefinition().equals(cardDefinition)) {
                 return flashcard;
@@ -168,28 +168,28 @@ public class Main {
             return;
         }
 
-        ArrayList<String> hardestCard = new ArrayList<>();
+        ArrayList<String> hardestCardList = new ArrayList<>();
         int hardestCardNumber = 0;
 
         for (Flashcard flashcard : flashcardList) {
             if (flashcard.getErrors() > hardestCardNumber) {
-                hardestCard.clear();
-                hardestCard.add(flashcard.getQuestion());
+                hardestCardList.clear();
+                hardestCardList.add(flashcard.getQuestion());
                 hardestCardNumber = flashcard.getErrors();
             } else if (flashcard.getErrors() == hardestCardNumber) {
-                hardestCard.add(flashcard.getQuestion());
+                hardestCardList.add(flashcard.getQuestion());
             }
         }
 
-        if (hardestCard.size() == 1) {
-            outputMsgAndLog("The hardest card is \"" + hardestCard.get(0) + "\". You have "
+        if (hardestCardList.size() == 1) {
+            outputMsgAndLog("The hardest card is \"" + hardestCardList.get(0) + "\". You have "
                     + hardestCardNumber + " errors answering it.");
             return;
         }
 
-        String hardestCardOutput = hardestCard.get(0);
-        for (int i = 1; i < hardestCard.size(); i++) {
-            hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCard.get(i));
+        String hardestCardOutput = hardestCardList.get(0);
+        for (int i = 1; i < hardestCardList.size(); i++) {
+            hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCardList.get(i));
         }
 
         outputMsgAndLog("The hardest cards are \"" + hardestCardOutput + "\". You have "
@@ -225,7 +225,7 @@ public class Main {
         String cardToBeRemoved = userScanner.nextLine();
         applicationLogger(cardToBeRemoved);
 
-        Flashcard flashcard = checkCardQuestionInList(cardToBeRemoved);
+        Flashcard flashcard = findCardQuestionInList(cardToBeRemoved);
         if (flashcard != null) {
             flashcardList.remove(flashcard);
             outputMsgAndLog("The card has been removed.");
@@ -250,7 +250,7 @@ public class Main {
                 String cardErrors = fileScanner.nextLine();
                 applicationLogger(cardErrors);
 
-                Flashcard flashcard = checkCardQuestionInList(cardQuestion);
+                Flashcard flashcard = findCardQuestionInList(cardQuestion);
                 if (flashcard == null) {
                     flashcard = new Flashcard(cardQuestion, cardDefinition, Integer.parseInt(cardErrors));
                     flashcardList.add(flashcard);
@@ -291,7 +291,7 @@ public class Main {
             return "Correct answer.";
         }
 
-        Flashcard actualFlashcard = checkCardDefinitionInList(cardAnswer);
+        Flashcard actualFlashcard = findCardDefinitionInList(cardAnswer);
 
         if (actualFlashcard == null) {
             playedFlashcard.addOneError();
