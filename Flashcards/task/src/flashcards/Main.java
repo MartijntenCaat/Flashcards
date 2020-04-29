@@ -180,19 +180,20 @@ public class Main {
                 hardestCardList.add(flashcard.getQuestion());
             }
         }
+        outputMsgAndLog(createHardestCardOutput(hardestCardList, hardestCardNumber));
+    }
 
+    private String createHardestCardOutput(ArrayList<String> hardestCardList, int hardestCardNumber) {
         if (hardestCardList.size() == 1) {
-            outputMsgAndLog("The hardest card is \"" + hardestCardList.get(0) + "\". You have "
+            return ("The hardest card is \"" + hardestCardList.get(0) + "\". You have "
                     + hardestCardNumber + " errors answering it.");
-            return;
         }
 
         String hardestCardOutput = hardestCardList.get(0);
         for (int i = 1; i < hardestCardList.size(); i++) {
             hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCardList.get(i));
         }
-
-        outputMsgAndLog("The hardest cards are \"" + hardestCardOutput + "\". You have "
+        return ("The hardest cards are \"" + hardestCardOutput + "\". You have "
                 + hardestCardNumber + " errors answering them.");
     }
 
