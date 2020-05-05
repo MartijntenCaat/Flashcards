@@ -157,34 +157,27 @@ public class Main {
         outputMsgAndLog("Card statistics has been reset.");
     }
 
-    private boolean hardestCardPresent() {
+    private void hardestCard() {
+        int hardestCardErrors = 0;
+        ArrayList<String> hardestCardList = new ArrayList<>();
+
         for (Flashcard flashcard : flashcardList) {
-            if (flashcard.getErrors() > 0) {
-                return true;
+            int errors = flashcard.getErrors();
+            if (errors > hardestCardErrors) {
+                hardestCardList.clear();
+                hardestCardList.add(flashcard.getQuestion());
+                hardestCardErrors = errors;
+            } else if (errors == hardestCardErrors && errors > 0) {
+                hardestCardList.add(flashcard.getQuestion());
             }
         }
-        return false;
-    }
 
-    private void hardestCard() {
-        if (!hardestCardPresent()) {
+        if (hardestCardList.isEmpty()) {
             outputMsgAndLog("There are no cards with errors.");
             return;
         }
 
-        ArrayList<String> hardestCardList = new ArrayList<>();
-        int hardestCardNumber = 0;
-
-        for (Flashcard flashcard : flashcardList) {
-            if (flashcard.getErrors() > hardestCardNumber) {
-                hardestCardList.clear();
-                hardestCardList.add(flashcard.getQuestion());
-                hardestCardNumber = flashcard.getErrors();
-            } else if (flashcard.getErrors() == hardestCardNumber) {
-                hardestCardList.add(flashcard.getQuestion());
-            }
-        }
-        outputMsgAndLog(createHardestCardOutput(hardestCardList, hardestCardNumber));
+        outputMsgAndLog(createHardestCardOutput(hardestCardList, hardestCardErrors));
     }
 
     private String createHardestCardOutput(ArrayList<String> hardestCardList, int hardestCardNumber) {
