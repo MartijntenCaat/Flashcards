@@ -34,7 +34,7 @@ class Flashcard {
         return errors;
     }
 
-    public void addOneError() {
+    public void incError() {
         errors++;
     }
 
@@ -42,7 +42,7 @@ class Flashcard {
         errors = newErrors;
     }
 
-    public void resetStats() {
+    public void resetErrors() {
         errors = 0;
     }
 }
@@ -73,7 +73,7 @@ public class Main {
 
         switch (action) {
             case "add":
-                fillCardMap();
+                addCard();
                 break;
             case "remove":
                 removeCards();
@@ -104,7 +104,7 @@ public class Main {
         }
     }
 
-    private void fillCardMap() {
+    private void addCard() {
         outputMsgAndLog("The card:");
         String cardQuestion = userScanner.nextLine();
         applicationLogger(cardQuestion);
@@ -148,7 +148,7 @@ public class Main {
 
     private void resetStats() {
         for (Flashcard flashcard : flashcardList) {
-            flashcard.resetStats();
+            flashcard.resetErrors();
         }
         outputMsgAndLog("Card statistics has been reset.");
     }
@@ -295,12 +295,12 @@ public class Main {
         Flashcard actualFlashcard = findCardDefinitionInList(cardAnswer);
 
         if (actualFlashcard == null) {
-            playedFlashcard.addOneError();
+            playedFlashcard.incError();
             return "Wrong answer. The correct one is \"" + playedFlashcard.getDefinition() + "\".";
         }
 
         if (actualFlashcard != null) {
-            playedFlashcard.addOneError();
+            playedFlashcard.incError();
             return "Wrong answer. The correct one is \"" + playedFlashcard.getDefinition() + "\", " +
                     "you've just written the definition of \"" + actualFlashcard.getQuestion() + "\"";
         }
