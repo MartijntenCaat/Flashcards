@@ -34,7 +34,7 @@ class Flashcard {
         return errors;
     }
 
-    public void incError() {
+    public void addOneError() {
         errors++;
     }
 
@@ -42,7 +42,7 @@ class Flashcard {
         errors = newErrors;
     }
 
-    public void resetErrors() {
+    public void resetStats() {
         errors = 0;
     }
 }
@@ -73,7 +73,7 @@ public class Main {
 
         switch (action) {
             case "add":
-                addCard();
+                fillCardMap();
                 break;
             case "remove":
                 removeCards();
@@ -104,7 +104,7 @@ public class Main {
         }
     }
 
-    private void addCard() {
+    private void fillCardMap() {
         outputMsgAndLog("The card:");
         String cardQuestion = userScanner.nextLine();
         applicationLogger(cardQuestion);
@@ -148,45 +148,57 @@ public class Main {
 
     private void resetStats() {
         for (Flashcard flashcard : flashcardList) {
-            flashcard.resetErrors();
+            flashcard.resetStats();
         }
         outputMsgAndLog("Card statistics has been reset.");
     }
 
-    private void hardestCard() {
-        int hardestCardErrors = 0;
-        ArrayList<String> hardestCardList = new ArrayList<>();
-
+    private boolean hardestCardPresent() {
         for (Flashcard flashcard : flashcardList) {
-            int errors = flashcard.getErrors();
-            if (errors > hardestCardErrors) {
-                hardestCardList.clear();
-                hardestCardList.add(flashcard.getQuestion());
-                hardestCardErrors = errors;
-            } else if (errors == hardestCardErrors && errors > 0) {
-                hardestCardList.add(flashcard.getQuestion());
+            if (flashcard.getErrors() > 0) {
+                return true;
             }
         }
+        return false;
+    }
 
-        if (hardestCardList.isEmpty()) {
+    private void hardestCard() {
+        if (!hardestCardPresent()) {
             outputMsgAndLog("There are no cards with errors.");
             return;
         }
 
-        outputMsgAndLog(createHardestCardOutput(hardestCardList, hardestCardErrors));
+        ArrayList<String> hardestCardList = new ArrayList<>();
+        int hardestCardNumber = 0;
+
+        for (Flashcard flashcard : flashcardList) {
+            if (flashcard.getErrors() > hardestCardNumber) {
+                hardestCardList.clear();
+                hardestCardList.add(flashcard.getQuestion());
+                hardestCardNumber = flashcard.getErrors();
+            } else if (flashcard.getErrors() == hardestCardNumber) {
+                hardestCardList.add(flashcard.getQuestion());
+            }
+        }
+        outputMsgAndLog(createHardestCardOutput(hardestCardList, hardestCardNumber));
     }
 
     private String createHardestCardOutput(ArrayList<String> hardestCardList, int hardestCardNumber) {
+
         if (hardestCardList.size() == 1) {
             return ("The hardest card is \"" + hardestCardList.get(0) + "\". You have "
                     + hardestCardNumber + " errors answering it.");
         }
 
-        String hardestCardOutput = hardestCardList.get(0);
-        for (int i = 1; i < hardestCardList.size(); i++) {
-            hardestCardOutput = hardestCardOutput.concat("\", \"" + hardestCardList.get(i));
+        StringBuilder hardestCardOutput = new StringBuilder();
+        String prefix = "";
+        for (String card : hardestCardList) {
+            hardestCardOutput.append(prefix);
+            prefix = ", ";
+            hardestCardOutput.append("\"").append(card).append("\"");
         }
-        return ("The hardest cards are \"" + hardestCardOutput + "\". You have "
+
+        return ("The hardest cards are " + hardestCardOutput + ". You have "
                 + hardestCardNumber + " errors answering them.");
     }
 
@@ -288,12 +300,12 @@ public class Main {
         Flashcard actualFlashcard = findCardDefinitionInList(cardAnswer);
 
         if (actualFlashcard == null) {
-            playedFlashcard.incError();
+            playedFlashcard.addOneError();
             return "Wrong answer. The correct one is \"" + playedFlashcard.getDefinition() + "\".";
         }
 
         if (actualFlashcard != null) {
-            playedFlashcard.incError();
+            playedFlashcard.addOneError();
             return "Wrong answer. The correct one is \"" + playedFlashcard.getDefinition() + "\", " +
                     "you've just written the definition of \"" + actualFlashcard.getQuestion() + "\"";
         }
