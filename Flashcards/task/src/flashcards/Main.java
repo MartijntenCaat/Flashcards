@@ -191,12 +191,10 @@ public class Main {
         }
 
         StringBuilder hardestCardOutput = new StringBuilder();
-        String prefix = "";
         for (String card : hardestCardList) {
-            hardestCardOutput.append(prefix);
-            prefix = ", ";
-            hardestCardOutput.append("\"").append(card).append("\"");
+            hardestCardOutput.append("\"").append(card).append("\"").append(", ");
         }
+        hardestCardOutput.delete(hardestCardOutput.length() -  2, hardestCardOutput.length());
 
         return ("The hardest cards are " + hardestCardOutput + ". You have "
                 + hardestCardNumber + " errors answering them.");
