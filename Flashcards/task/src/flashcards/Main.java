@@ -26,6 +26,10 @@ class Flashcard {
         return definition;
     }
 
+    public boolean isCorrectAnswer(String answer) {
+        return this.getDefinition().equals(answer);
+    }
+
     public void setDefinition(String newDefinition) {
         definition = newDefinition;
     }
@@ -291,10 +295,6 @@ public class Main {
     }
 
     private String checkAnswer(Flashcard playedFlashcard, String cardAnswer) {
-        if (playedFlashcard.getDefinition().equals(cardAnswer)) {
-            return "Correct answer.";
-        }
-
         Flashcard actualFlashcard = findCardDefinitionInList(cardAnswer);
 
         if (actualFlashcard == null) {
@@ -333,8 +333,12 @@ public class Main {
             String cardAnswerByPlayer = userScanner.nextLine();
             applicationLogger(cardAnswerByPlayer);
 
-            String result = checkAnswer(flashcard, cardAnswerByPlayer);
-            outputMsgAndLog(result);
+            if (flashcard.isCorrectAnswer(cardAnswerByPlayer)) {
+                outputMsgAndLog("Correct answer.");
+            } else {
+                String result = checkAnswer(flashcard, cardAnswerByPlayer);
+                outputMsgAndLog(result);
+            }
         }
     }
 
