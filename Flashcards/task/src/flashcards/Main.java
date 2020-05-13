@@ -294,22 +294,6 @@ public class Main {
         outputMsgAndLog(numberOfSavedCards + " cards have been saved.");
     }
 
-//    private String checkAnswer(Flashcard playedFlashcard, String cardAnswer) {
-//        Flashcard actualFlashcard = findCardDefinitionInList(cardAnswer);
-//
-//        if (actualFlashcard == null) {
-//            playedFlashcard.addOneError();
-//            return "Wrong answer. The correct one is \"" + playedFlashcard.getDefinition() + "\".";
-//        }
-//
-//        if (actualFlashcard != null) {
-//            playedFlashcard.addOneError();
-//            return "Wrong answer. The correct one is \"" + playedFlashcard.getDefinition() + "\", " +
-//                    "you've just written the definition of \"" + actualFlashcard.getQuestion() + "\"";
-//        }
-//        return null;
-//    }
-
     private int askDurationOfGame() {
         try {
             outputMsgAndLog("How many times to ask?");
@@ -336,9 +320,9 @@ public class Main {
             if (flashcard.isCorrectAnswer(cardAnswerByPlayer)) {
                 outputMsgAndLog("Correct answer.");
                 return;
-            } else {
-                flashcard.addOneError();
             }
+
+            flashcard.addOneError();
 
             Flashcard actualFlashcard = findCardDefinitionInList(cardAnswerByPlayer);
             if (actualFlashcard == null) {
