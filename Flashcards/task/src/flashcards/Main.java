@@ -19,7 +19,7 @@ class Flashcard {
     }
 
     public String getQuestion() {
-        return  question;
+        return question;
     }
 
     public String getDefinition() {
@@ -38,7 +38,7 @@ class Flashcard {
         return errors;
     }
 
-    public void addOneError() {
+    public void incError() {
         errors++;
     }
 
@@ -46,7 +46,7 @@ class Flashcard {
         errors = newErrors;
     }
 
-    public void resetStats() {
+    public void resetErrors() {
         errors = 0;
     }
 }
@@ -77,16 +77,16 @@ public class Main {
 
         switch (action) {
             case "add":
-                fillCardMap();
+                addCard();
                 break;
             case "remove":
-                removeCards();
+                removeCard();
                 break;
             case "import":
-                importCards();
+                importCardFile();
                 break;
             case "export":
-                exportCards();
+                exportCardListToFile();
                 break;
             case "ask":
                 runFlashCardGame();
@@ -95,7 +95,7 @@ public class Main {
                 exitGame();
                 break;
             case "log":
-                exportLog();
+                exportLogToFile();
                 break;
             case "hardest card":
                 hardestCard();
@@ -108,7 +108,7 @@ public class Main {
         }
     }
 
-    private void fillCardMap() {
+    private void addCard() {
         outputMsgAndLog("The card:");
         String cardQuestion = userScanner.nextLine();
         applicationLogger(cardQuestion);
@@ -152,7 +152,7 @@ public class Main {
 
     private void resetStats() {
         for (Flashcard flashcard : flashcardList) {
-            flashcard.resetStats();
+            flashcard.resetErrors();
         }
         outputMsgAndLog("Card statistics has been reset.");
     }
@@ -213,7 +213,7 @@ public class Main {
         System.out.println(output);
     }
 
-    private void exportLog() {
+    private void exportLogToFile() {
         outputMsgAndLog("File name:");
         File file = new File(userScanner.nextLine());
         applicationLogger(file.toString());
@@ -228,7 +228,7 @@ public class Main {
         outputMsgAndLog("The log has been saved.");
     }
 
-    private void removeCards() {
+    private void removeCard() {
         outputMsgAndLog("The card:");
         String cardToBeRemoved = userScanner.nextLine();
         applicationLogger(cardToBeRemoved);
@@ -242,7 +242,7 @@ public class Main {
         }
     }
 
-    private void importCards() {
+    private void importCardFile() {
         outputMsgAndLog("File name:");
         File file = new File(userScanner.nextLine());
         applicationLogger(file.toString());
@@ -274,7 +274,7 @@ public class Main {
         }
     }
 
-    private void exportCards() {
+    private void exportCardListToFile() {
         outputMsgAndLog("File name:");
         File file = new File(userScanner.nextLine());
         applicationLogger(file.toString());
@@ -320,21 +320,20 @@ public class Main {
 
             if (flashcard.isCorrectAnswer(cardAnswerByPlayer)) {
                 outputMsgAndLog("Correct answer.");
-                return;
+                continue;
             }
 
-            flashcard.addOneError();
+            flashcard.incError();
 
             Flashcard actualFlashcard = findCardDefinitionInList(cardAnswerByPlayer);
             if (actualFlashcard == null) {
                 outputMsgAndLog("Wrong answer. The correct one is \"" + flashcard.getDefinition() + "\".");
-                return;
+                continue;
             }
 
             if (actualFlashcard != null) {
                 outputMsgAndLog("Wrong answer. The correct one is \"" + flashcard.getDefinition() + "\", " +
                         "you've just written the definition of \"" + actualFlashcard.getQuestion() + "\"");
-                return;
             }
         }
     }
