@@ -309,6 +309,7 @@ public class Main {
     private void runFlashCardGame() {
         int duration = askDurationOfGame();
         Random random = new Random();
+
         for (int i = 0; i < duration; i++) {
             int randomNumber = random.nextInt(flashcardList.size());
             Flashcard flashcard = flashcardList.get(randomNumber);
@@ -327,11 +328,13 @@ public class Main {
             Flashcard actualFlashcard = findCardDefinitionInList(cardAnswerByPlayer);
             if (actualFlashcard == null) {
                 outputMsgAndLog("Wrong answer. The correct one is \"" + flashcard.getDefinition() + "\".");
+                return;
             }
 
             if (actualFlashcard != null) {
                 outputMsgAndLog("Wrong answer. The correct one is \"" + flashcard.getDefinition() + "\", " +
                         "you've just written the definition of \"" + actualFlashcard.getQuestion() + "\"");
+                return;
             }
         }
     }
