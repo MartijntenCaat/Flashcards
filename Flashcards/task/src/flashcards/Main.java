@@ -163,11 +163,15 @@ public class Main {
 
         for (Flashcard flashcard : flashcardList) {
             int errors = flashcard.getErrors();
+
             if (errors > hardestCardErrors) {
                 hardestCardList.clear();
                 hardestCardList.add(flashcard.getQuestion());
                 hardestCardErrors = errors;
-            } else if (errors == hardestCardErrors && errors > 0) {
+                continue;
+            }
+
+            if (errors == hardestCardErrors && errors > 0) {
                 hardestCardList.add(flashcard.getQuestion());
             }
         }
