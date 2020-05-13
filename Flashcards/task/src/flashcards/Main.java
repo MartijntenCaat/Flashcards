@@ -176,7 +176,6 @@ public class Main {
             outputMsgAndLog("There are no cards with errors.");
             return;
         }
-
         outputMsgAndLog(createHardestCardOutput(hardestCardList, hardestCardErrors));
     }
 
