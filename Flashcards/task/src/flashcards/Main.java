@@ -320,8 +320,8 @@ public class Main {
             }
 
             flashcard.incError();
-
             Flashcard actualFlashcard = findCardDefinitionInList(cardAnswerByPlayer);
+
             if (actualFlashcard == null) {
                 outputMsgAndLog("Wrong answer. The correct one is \"" + flashcard.getDefinition() + "\".");
                 continue;
