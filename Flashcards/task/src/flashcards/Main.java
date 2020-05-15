@@ -49,6 +49,11 @@ class Flashcard {
     public void resetErrors() {
         errors = 0;
     }
+
+    public boolean isAnswerExistingDefinition(String answer) {
+        for (Flashcard flashcard : Main. )
+        return false;
+    }
 }
 
 public class Main {
@@ -324,13 +329,11 @@ public class Main {
 
             if (actualFlashcard == null) {
                 outputMsgAndLog("Wrong answer. The correct one is \"" + flashcard.getDefinition() + "\".");
-                continue;
-            }
-
-            if (actualFlashcard != null) {
+            } else {
                 outputMsgAndLog("Wrong answer. The correct one is \"" + flashcard.getDefinition() + "\", " +
                         "you've just written the definition of \"" + actualFlashcard.getQuestion() + "\"");
             }
+
         }
     }
 
