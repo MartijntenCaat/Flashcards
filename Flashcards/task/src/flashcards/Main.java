@@ -49,11 +49,6 @@ class Flashcard {
     public void resetErrors() {
         errors = 0;
     }
-
-    public boolean isAnswerExistingDefinition(String answer) {
-        for (Flashcard flashcard : Main. )
-        return false;
-    }
 }
 
 public class Main {
