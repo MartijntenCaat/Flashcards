@@ -334,6 +334,24 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
+
+        for (int i = 0; i < args.length; i++) {
+            String action = args[i];
+            i++;
+            String location = args[i];
+
+            switch (action) {
+                case "-import":
+                    System.out.println("it's import!");
+                    break;
+                case "-export":
+                    System.out.printf("it's export!");
+                    break;
+                default:
+                    break;
+            }
+        }
+
         while (main.isUpAndRunning) {
             main.runGameByAction();
         }
