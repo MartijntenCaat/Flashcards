@@ -102,7 +102,7 @@ public class Main {
                 removeCard();
                 break;
             case "import":
-                importCardFile();
+                importCardFile(askFileName());
                 break;
             case "export":
                 exportCardListToFile();
@@ -125,6 +125,13 @@ public class Main {
             default:
                 break;
         }
+    }
+
+    private String askFileName() {
+        outputMsgAndLog("File name:");
+        String filename = userScanner.nextLine();
+        applicationLogger(filename);
+        return filename;
     }
 
     private void addCard() {
@@ -257,11 +264,8 @@ public class Main {
         }
     }
 
-    private void importCardFile() {
-        outputMsgAndLog("File name:");
-        File file = new File(userScanner.nextLine());
-        applicationLogger(file.toString());
-
+    private void importCardFile(String filename) {
+        File file = new File(filename);
         int cardsImported = 0;
 
         try (Scanner fileScanner = new Scanner(file)) {
