@@ -26,24 +26,24 @@ class Flashcard {
         return definition;
     }
 
-    public boolean isCorrectAnswer(String answer) {
-        return this.getDefinition().equals(answer);
-    }
-
     public void setDefinition(String newDefinition) {
         definition = newDefinition;
+    }
+
+    public boolean isCorrectAnswer(String answer) {
+        return this.getDefinition().equals(answer);
     }
 
     public int getErrors() {
         return errors;
     }
 
-    public void incError() {
-        errors++;
-    }
-
     public void setErrors(int newErrors) {
         errors = newErrors;
+    }
+
+    public void incError() {
+        errors++;
     }
 
     public void resetErrors() {
@@ -62,6 +62,16 @@ public class Main {
         this.userScanner = new Scanner(System.in);
         this.logFile = new ArrayList<>();
         this.isUpAndRunning = true;
+    }
+
+    public static void main(String[] args) {
+        Main main = new Main();
+
+        main.runGameByArgs(args);
+
+        while (main.isUpAndRunning) {
+            main.runGameByAction();
+        }
     }
 
     private void exitGame() {
@@ -352,16 +362,6 @@ public class Main {
                         "you've just written the definition of \"" + actualFlashcard.getQuestion() + "\"");
             }
 
-        }
-    }
-
-    public static void main(String[] args) {
-        Main main = new Main();
-
-        main.runGameByArgs(args);
-
-        while (main.isUpAndRunning) {
-            main.runGameByAction();
         }
     }
 }
