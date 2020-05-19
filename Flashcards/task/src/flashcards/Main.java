@@ -88,7 +88,7 @@ public class Main {
 
             switch (action) {
                 case "-import":
-                    System.out.println("it's import!");
+                    importCardFile(location);
                     break;
                 case "-export":
                     System.out.println("it's export!");
@@ -303,10 +303,15 @@ public class Main {
         }
     }
 
-    private void exportCardListToFile() {
+    private String askExportLocation() {
         outputMsgAndLog("File name:");
-        File file = new File(userScanner.nextLine());
-        applicationLogger(file.toString());
+        String filename = userScanner.nextLine();
+        applicationLogger(filename);
+        return filename;
+    }
+
+    private void exportCardListToFile(String filename) {
+        File file = new File(filename);
 
         int numberOfSavedCards = 0;
 
