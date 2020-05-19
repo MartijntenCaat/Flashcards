@@ -70,6 +70,25 @@ public class Main {
         outputMsgAndLog("Bye bye!");
     }
 
+    private void runGameByArgs(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            String action = args[i];
+            i++;
+            String location = args[i];
+
+            switch (action) {
+                case "-import":
+                    System.out.println("it's import!");
+                    break;
+                case "-export":
+                    System.out.println("it's export!");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     private void runGameByAction() {
         outputMsgAndLog("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats):");
         String action = userScanner.nextLine();
@@ -335,22 +354,7 @@ public class Main {
     public static void main(String[] args) {
         Main main = new Main();
 
-        for (int i = 0; i < args.length; i++) {
-            String action = args[i];
-            i++;
-            String location = args[i];
-
-            switch (action) {
-                case "-import":
-                    System.out.println("it's import!");
-                    break;
-                case "-export":
-                    System.out.printf("it's export!");
-                    break;
-                default:
-                    break;
-            }
-        }
+        main.runGameByArgs(args);
 
         while (main.isUpAndRunning) {
             main.runGameByAction();
