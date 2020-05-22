@@ -56,6 +56,8 @@ public class Main {
     private ArrayList<String> logFile;
     private Scanner userScanner;
     private boolean isUpAndRunning;
+    private boolean isImportRequested;
+    private boolean isExportRequested;
 
     private Main() {
         this.flashcardList = new ArrayList<>();
@@ -91,7 +93,7 @@ public class Main {
                     importCardFile(location);
                     break;
                 case "-export":
-                    System.out.println("it's export!");
+                    exportCardListToFile(location);
                     break;
                 default:
                     break;
@@ -112,10 +114,10 @@ public class Main {
                 removeCard();
                 break;
             case "import":
-                importCardFile(askFileName());
+                importCardFile(askImportFileName());
                 break;
             case "export":
-                exportCardListToFile();
+                exportCardListToFile(askExportFileName());
                 break;
             case "ask":
                 runFlashCardGame();
@@ -137,7 +139,7 @@ public class Main {
         }
     }
 
-    private String askFileName() {
+    private String askImportFileName() {
         outputMsgAndLog("File name:");
         String filename = userScanner.nextLine();
         applicationLogger(filename);
@@ -303,7 +305,7 @@ public class Main {
         }
     }
 
-    private String askExportLocation() {
+    private String askExportFileName() {
         outputMsgAndLog("File name:");
         String filename = userScanner.nextLine();
         applicationLogger(filename);
