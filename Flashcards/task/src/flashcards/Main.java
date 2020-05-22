@@ -58,6 +58,8 @@ public class Main {
     private boolean isUpAndRunning;
     private boolean isImportRequested;
     private boolean isExportRequested;
+    private String importFileLocation;
+    private String exportFileLocation;
 
     private Main() {
         this.flashcardList = new ArrayList<>();
@@ -70,15 +72,22 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-
         main.collectArgs(args);
+
+        if (main.isImportRequested) {
+            main.importCardFile(main.importFileLocation);
+        }
 
         while (main.isUpAndRunning) {
             main.runGameByAction();
         }
+
+        if (main.isExportRequested) {
+            main.exportCardListToFile(main.exportFileLocation);
+        }
     }
 
-    private boolean isImportRequested() {
+    boolean isImportRequested() {
         return isImportRequested;
     }
 
@@ -102,24 +111,20 @@ public class Main {
 
     private void collectArgs(String[] args) {
         for (int i = 0; i < args.length; i++) {
-            String action = args[i];
+            String firstArg = args[i];
             i++;
-            String location = args[i];
+            String secondArg = args[i];
 
-            if (args[i].equals("-import")) {
+            if (firstArg.equals("-import")) {
                 setImportRequested(true);
-
+                importFileLocation = secondArg;
+                continue;
             }
 
-            switch (action) {
-                case "-import":
-                    importCardFile(location);
-                    break;
-                case "-export":
-                    exportCardListToFile(location);
-                    break;
-                default:
-                    break;
+            if (firstArg.equals("-export")) {
+                setExportRequested(true);
+                exportFileLocation = secondArg;
+
             }
         }
     }
