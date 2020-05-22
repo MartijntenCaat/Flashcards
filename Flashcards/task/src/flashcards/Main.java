@@ -64,16 +64,34 @@ public class Main {
         this.userScanner = new Scanner(System.in);
         this.logFile = new ArrayList<>();
         this.isUpAndRunning = true;
+        this.isImportRequested = false;
+        this.isExportRequested = false;
     }
 
     public static void main(String[] args) {
         Main main = new Main();
 
-        main.runGameByArgs(args);
+        main.collectArgs(args);
 
         while (main.isUpAndRunning) {
             main.runGameByAction();
         }
+    }
+
+    private boolean isImportRequested() {
+        return isImportRequested;
+    }
+
+    private void setImportRequested(boolean value) {
+        isImportRequested = true;
+    }
+
+    private boolean isExportRequested() {
+        return isExportRequested;
+    }
+
+    private void setExportRequested(boolean value) {
+        isExportRequested = true;
     }
 
     private void exitGame() {
@@ -82,11 +100,16 @@ public class Main {
         outputMsgAndLog("Bye bye!");
     }
 
-    private void runGameByArgs(String[] args) {
+    private void collectArgs(String[] args) {
         for (int i = 0; i < args.length; i++) {
             String action = args[i];
             i++;
             String location = args[i];
+
+            if (args[i].equals("-import")) {
+                setImportRequested(true);
+
+            }
 
             switch (action) {
                 case "-import":
