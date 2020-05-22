@@ -110,10 +110,11 @@ public class Main {
     }
 
     private void collectArgs(String[] args) {
-        for (int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length; ) {
             String firstArg = args[i];
             i++;
             String secondArg = args[i];
+            i++;
 
             if (firstArg.equals("-import")) {
                 setImportRequested(true);
